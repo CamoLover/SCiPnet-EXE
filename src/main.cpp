@@ -1,10 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <windows.h>
+#include <iostream>
 #include <string>
 #include <thread>
 #include <chrono>
-#include <cstdlib>
 #include <iomanip>
 #include <sstream>
 #include <fstream>
@@ -37,20 +38,20 @@ struct AnimatedLine {
 };
 
 class Terminal {
-private:
-    sf::RenderWindow window;
-    sf::Font font;
-    sf::Texture backgroundTexture;
-    sf::Sprite backgroundSprite;
-    std::string currentInput;
-    std::deque<AnimatedLine> displayBuffer;
-    bool isLoggedIn;
-    bool isWaitingForPassword;
-    std::string username;
-    float cursorBlinkTime;
-    bool showCursor;
-    float scrollOffset;  
-    float maxScrollOffset;
+    private:
+        sf::RenderWindow window;
+        sf::Font font;
+        sf::Texture backgroundTexture;
+        sf::Sprite backgroundSprite;
+        std::string currentInput;
+        std::deque<AnimatedLine> displayBuffer;
+        bool isLoggedIn;
+        bool isWaitingForPassword;
+        std::string username;
+        float cursorBlinkTime;
+        bool showCursor;
+        float scrollOffset;  
+        float maxScrollOffset;
 
     void updateMaxScrollOffset() {
         float contentHeight = displayBuffer.size() * LINE_SPACING + LINE_SPACING; 
@@ -91,7 +92,6 @@ private:
         updateMaxScrollOffset();
         scrollOffset = maxScrollOffset;
     }
-
 
     void updateAnimations(float deltaTime) {
         bool previousComplete = true; 
@@ -199,6 +199,7 @@ private:
             addToBuffer("help                   - Show this help message");
             addToBuffer("clear                  - Clear the screen");
             addToBuffer("rs <num>               - Show SCP link for the specified SCP number");
+            addToBuffer("rs <num> open          - Same as rs <num> + open the URL in the browser");
             addToBuffer("pixeleur               - Open Pixeleur website");
             addToBuffer("log <message>          - Log a message to the system log");
             addToBuffer("status                 - Check system status");
@@ -353,13 +354,14 @@ public:
     }
 };
 
-int main() {
-    try {
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
+        try {
         Terminal terminal;
         terminal.run();
-        return 0;
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return EXIT_FAILURE;
     }
-    catch (const std::exception& e) {
-        return 1;
-    }
+
+    return EXIT_SUCCESS;
 }

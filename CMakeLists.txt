@@ -37,8 +37,8 @@ if(WIN32)
     endif()
 endif()
 
-# Add the executable
-add_executable(${PROJECT_NAME} 
+# Add the executable with WIN32 subsystem
+add_executable(${PROJECT_NAME} WIN32  # Add WIN32 here
     src/main.cpp
     ${RESOURCE_FILE}  # Include only if it exists
 )
