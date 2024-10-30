@@ -76,14 +76,7 @@ class Terminal {
         );
     }
 
-    void addToBuffer(const std::string& text, bool splitLines = true) {
-        if (!splitLines) {
-            displayBuffer.push_back(AnimatedLine(text, true));
-            updateMaxScrollOffset();
-            scrollOffset = maxScrollOffset;
-            return;
-        }
-
+    void addToBuffer(const std::string& text) {
         std::istringstream stream(text);
         std::string line;
         while (std::getline(stream, line)) {
@@ -92,6 +85,7 @@ class Terminal {
         updateMaxScrollOffset();
         scrollOffset = maxScrollOffset;
     }
+
 
     void updateAnimations(float deltaTime) {
         bool previousComplete = true; 
@@ -276,11 +270,11 @@ public:
         
         window.setFramerateLimit(60);
         
-        if (!font.loadFromFile("resource/Consolas.ttf")) {
+        if (!font.loadFromFile("resource/GFX/police/Consolas.ttf")) {
             throw std::runtime_error("Failed to load font");
         }
 
-        if (!backgroundTexture.loadFromFile("resource/Background.bmp")) {
+        if (!backgroundTexture.loadFromFile("resource/GFX/Background.bmp")) {
             throw std::runtime_error("Failed to load background");
         }
 
