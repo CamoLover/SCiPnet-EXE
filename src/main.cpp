@@ -167,7 +167,6 @@ class Terminal {
                 addToBuffer("[INFO] Verifying credentials...");
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 addToBuffer("[INFO] Access Granted.");
-                addToBuffer(" ");  
                 addToBuffer(R"(   _____ _______ ____             __)");
                 addToBuffer(R"(  / ___// ____(_) __ \____  ___  / /_)");
                 addToBuffer(R"(  \__ \/ /   / / /_/ / __ \/ _ \/ __/)");
@@ -187,8 +186,9 @@ class Terminal {
     }
 
     void processCommand(const std::string& command) {
+        addToBuffer(" ");
+        addToBuffer("SCiPnet@Hartmann:~$ " + command);
         if (command == "help") {
-            addToBuffer(" ");
             addToBuffer("Available commands:");
             addToBuffer("help                   - Show this help message");
             addToBuffer("clear                  - Clear the screen");
@@ -218,7 +218,6 @@ class Terminal {
                 ss << std::setw(3) << std::setfill('0') << num;
 
                 std::string link = "http://fondationscp.wikidot.com/scp-" + ss.str();
-                addToBuffer(" ");
                 addToBuffer("Link: " + link);
 
                 if (commandAfterNumber == "open") {
@@ -227,7 +226,6 @@ class Terminal {
                 }
             }
             catch (...) {
-                addToBuffer(" ");
                 addToBuffer("[ERROR] Invalid SCP number format");
             }
         }
@@ -236,23 +234,19 @@ class Terminal {
             std::ofstream logFile("system.log", std::ios::app);
             if (logFile.is_open()) {
                 logFile << message << std::endl;
-                addToBuffer(" ");
                 addToBuffer("[INFO] Message logged successfully");
             }
         }
         else if (command == "status") {
-            addToBuffer(" ");
             addToBuffer("[INFO] Checking system status...");
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             addToBuffer("[STATUS] All systems operational.");
         }
         else if (command == "pixeleur") {
-            addToBuffer(" ");
             addToBuffer("Opening Pixeleur website...");
             system("start https://pixeleur.fr");
         }
         else if (command != "exit") {
-            addToBuffer(" ");
             addToBuffer("[ERROR] Unknown command: " + command);
         }
     }
