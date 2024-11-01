@@ -29,7 +29,6 @@ if not exist "%SCRIPT_DIR%build" (
     mkdir "%SCRIPT_DIR%build" 
         echo ERROR: Failed to create build directory.
         exit /b 1
-    )
 )
 
 :: Navigate to the build directory
