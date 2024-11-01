@@ -44,7 +44,7 @@ cmake --build .
 
 :: Locate and execute the executable
 echo Attempting to locate the executable:
-======================================================
+echo ======================================================
 
 set "EXE_PATH=%SCRIPT_DIR%build\\Debug\\%PROJECT_NAME%.exe"
 if exist "%EXE_PATH%" (
